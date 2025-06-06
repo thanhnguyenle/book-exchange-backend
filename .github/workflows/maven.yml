@@ -12,6 +12,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -28,21 +29,18 @@ jobs:
         cache: maven
     
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    
-    - name: Run tests
-      run: mvn test
-    
+      run: mvn clean package
+
     - name: Build Docker image
-      run: docker build -t my-spring-app:${{ github.sha }} .
+      run: docker build -t book:latest .
     
     - name: Test Docker image
       run: |
-        docker run -d --name test-container -p 8080:8080 my-spring-app:${{ github.sha }}
+        docker run -d --name book -p 8080:8080 book:latest
         sleep 30
         curl -f http://localhost:8080/actuator/health || exit 1
-        docker stop test-container
-        docker rm test-container
+        docker stop book
+        docker rm book
     
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
