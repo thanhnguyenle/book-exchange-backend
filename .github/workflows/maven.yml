@@ -10,7 +10,7 @@ on:
       environment:
         description: 'Deployment environment'
         required: true
-        default: 'staging'
+        default: 'production'
         type: choice
         options:
           - staging
@@ -73,9 +73,9 @@ jobs:
 
     - name: Debug Environment Variables
       run: |
-        echo "${{secrets.AWS_ROLE_ARN}}" | sed 's/./& /g'
-        echo "${{secrets.DB_PASSWORD}}" | sed 's/./& /g'
-        echo "${{secrets.DB_USERNAME}}" | sed 's/./& /g'
+        [ -n "${{ secrets.AWS_ROLE_ARN }}" ] && echo "AWS_ROLE_ARN: $(echo "${{ secrets.AWS_ROLE_ARN }}" | sed 's/./& /g')" || echo "AWS_ROLE_ARN is empty"
+        [ -n "${{ secrets.DB_USERNAME }}" ] && echo "DB_USERNAME: $(echo "${{ secrets.DB_USERNAME }}" | sed 's/./& /g')" || echo "DB_USERNAME is empty"
+        [ -n "${{ secrets.secrets.DB_USERNAME }}" ] && echo "DB_USERNAME: $(echo "${{ secrets.secrets.DB_USERNAME }}" | sed 's/./& /g')" || echo "DB_USERNAME is empty"
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
