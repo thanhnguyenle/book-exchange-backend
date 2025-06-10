@@ -61,6 +61,15 @@ jobs:
         else
           mvn clean package
         fi
+      env:
+        DB_URL: ${{ secrets.DB_URL }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+        BREVO_EMAIL: ${{ secrets.BREVO_EMAIL }}
+        JWT_SIGNER_KEY: ${{ secrets.JWT_SIGNER_KEY }}
+        CLIENT_URL: ${{ secrets.CLIENT_URL }}
+        VERIFY_EMAIL_URL: ${{ secrets.VERIFY_EMAIL_URL }}
     
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
