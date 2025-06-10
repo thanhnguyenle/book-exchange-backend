@@ -1,0 +1,44 @@
+# application.yml - Safe to commit (no sensitive data)
+server:
+  port: ${SERVER_PORT:80}
+  servlet:
+    context-path: /
+
+client:
+  url: ${CLIENT_URL:http://localhost:3000}
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:testdb}
+    driverClassName: ${DB_DRIVER:org.h2.Driver}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    show-sql: ${SHOW_SQL:true}
+    properties:
+      hibernate:
+        dialect: ${HIBERNATE_DIALECT:org.hibernate.dialect.MySQLDialect}
+
+brevo:
+  api-key: ${BREVO_API_KEY:}
+  email: ${BREVO_EMAIL:}
+  name: ${BREVO_NAME:BookExchange}
+  verify-email-url: ${VERIFY_EMAIL_URL:http://localhost:80/auth/verify-email}
+
+jwt:
+  signerKey: ${JWT_SIGNER_KEY:}
+  valid-duration: ${JWT_VALID_DURATION:300}
+  refreshable-duration: ${JWT_REFRESH_DURATION:120000}
+
+springdoc:
+  api-docs:
+    enabled: ${API_DOCS_ENABLED:true}
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:true}
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    display-request-duration: true
+    filter: true
